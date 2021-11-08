@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-proxy-bot-deployment
+  labels:
+    app: alert-proxy-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-proxy-bot
+  template:
+    metadata:
+      labels:
+        app: alert-proxy-bot
+    spec:
+      containers:
+        - name: alert-proxy-bot
+          image: shadrus/alert-proxy-bot:v0.1.0
+          ports:
+            - containerPort: 8080
+...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-proxy-bot-service
+spec:
+  selector:
+    app: alert-proxy-bot
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+...

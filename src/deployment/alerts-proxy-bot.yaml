@@ -18,6 +18,12 @@ spec:
       containers:
         - name: alert-proxy-bot
           image: shadrus/alert-proxy-bot:v0.1.0
+          env:
+            - name: TELEGRAM_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-token
+                  key: TELEGRAM_TOKEN
           ports:
             - containerPort: 8080
 ...
